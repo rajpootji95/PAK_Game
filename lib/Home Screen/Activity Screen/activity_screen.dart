@@ -114,7 +114,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             child: Image.asset('assets/images/Activity/activitHome.png'),
                           ),
                         ),
-                        Text("Activity \n Award"),
+                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Activity \n Award'),styles: const TextStyle(
+                            color: AppColor.black,fontWeight: FontWeight.bold,fontSize: 13
+                        ) ,),
+
                       ],
                     ),
                     Column(
@@ -137,7 +140,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             child: Image.asset('assets/images/Activity/acitiviyHome.png'),
                           ),
                         ),
-                        Text("Betting \n rebate"),
+                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Betting \n rebate'),styles: const TextStyle(
+                            color: AppColor.black,fontWeight: FontWeight.bold,fontSize: 13
+                        ) ,),
+
                       ],
                     ),
                     Column(
@@ -160,7 +166,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             child: Image.asset('assets/images/Activity/acivityHomeWin.png'),
                           ),
                         ),
-                        Text("Super\nJackpot"),
+                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Super\nJackpot'),styles: const TextStyle(
+                            fontWeight: FontWeight.bold,fontSize: 13
+                        ) ,),
+
                       ],
                     ),
                   ],
@@ -180,7 +189,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             Container(
                               height: 120,
                               width: double.infinity,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                  // color: Colors.red,
                                  //  gradient: LinearGradient(
                                  //      colors: [ Colors.red, AppColor.white],
@@ -190,8 +199,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
                               ),
                               child: Image.asset("assets/images/Activity/gift.png"),
                             ),
-                            Text("Gifts",style: TextStyle(fontWeight: FontWeight.bold),),
-                            Text("Enter Redemtion Code to Receive gift rewards",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 12),),
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Gifts'),styles: const TextStyle(
+                                fontWeight: FontWeight.bold
+                            ) ,),
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Enter Redemtion Code to Receive gift rewards'),styles: const TextStyle(
+                                fontWeight: FontWeight.bold,fontSize: 12
+                            ) ,),
+
 
                           ],
                         ),
@@ -208,7 +222,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             Container(
                               height: 120,
                               width: double.infinity,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 // color: Colors.red,
                                 //  gradient: LinearGradient(
                                 //      colors: [ Colors.red, AppColor.white],
@@ -218,8 +232,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
                               ),
                               child: Image.asset("assets/images/Activity/attetd.png"),
                             ),
-                            const Text("Attendance Bonus",style: TextStyle(fontWeight: FontWeight.bold),),
-                            const Text('The More Consecutive Days you sign in, the higher the reward will be',style: TextStyle(fontWeight: FontWeight.normal,fontSize: 12),),
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Attendance Bonus'),styles: const TextStyle(
+                                fontWeight: FontWeight.bold
+                            ) ,),
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('The More Consecutive Days you sign in, the higher the reward will be'),styles: const TextStyle(
+                                fontWeight: FontWeight.bold,fontSize: 12
+                            ) ,),
+
+
                           ],
                         ),
                       ),
@@ -240,7 +260,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                               decoration: BoxDecoration(
                                   color: AppColor.white,
                                   borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: AppColor.shadowGrey,
                                       offset: Offset(0, 2),
@@ -254,7 +274,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                   Container(
                                     height: 120,
                                     width: double.infinity,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       // color: Colors.red,
                                     ),
                                     child: Image.asset(imageGridUrls[index],fit: BoxFit.fill,),
@@ -262,7 +282,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                   const SizedBox(height: 3,),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: Text(nameTextList[index],style: TextStyle(color: AppColor.black,fontWeight: FontWeight.bold),),
+                                    child:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate(nameTextList[index]),styles: const TextStyle(
+                                        fontWeight: FontWeight.bold,fontSize: 12
+                                    ) ,),
                                   ),
                                   const SizedBox(height: 2,),
                                 ],

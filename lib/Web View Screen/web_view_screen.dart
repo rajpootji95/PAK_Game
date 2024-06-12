@@ -1,7 +1,13 @@
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../Utils/colors.dart';
+import '../Utils/myWidget.dart';
+import '../provider/languageProvider.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String gameUrl;
@@ -58,18 +64,48 @@ class _WebViewScreenState extends State<WebViewScreen> {
       ..loadRequest(
           Uri.parse(widget.gameUrl)
       );
+    _checkInternetConnection();
     super.initState();
     // WebViewPlatform.instance;
 
   }
+    bool _isConnected = true;
+    void _checkInternetConnection() async {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+
+      Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+        if (result == ConnectivityResult.none) {
+          setState(() {
+            _isConnected = false;
+          });
+        } else {
+          setState(() {
+            _isConnected = true;
+          });
+        }
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
+    return _isConnected ? SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("Pak\n=games=",textAlign: TextAlign.center,style: TextStyle(fontSize: 16),),
+            title:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Pak\n=games="),styles: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                color: AppColor.black,overflow: TextOverflow.ellipsis
+            ),),
             actions: [
               IconButton(
                   onPressed: () async {
@@ -128,6 +164,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
           //   },
           //   child: const Icon(Icons.golf_course),
           // ),
-        ) );
+        ) ):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
   }
 }

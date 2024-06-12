@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -42,6 +43,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     emailController.text = widget.getProfileModel?.data?.emailId ?? "dev@gmail.com";
     nameController.text = widget.getProfileModel?.data?.username ?? "Deva";
     mobileController.text = widget.getProfileModel?.data?.mobile ?? "7788998984";
+    _checkInternetConnection();
   }
 
   _getFromGallery() async {
@@ -97,9 +99,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result);
       if(finalResult['error'] == true){
-        Fluttertoast.showToast(msg: "${finalResult['message']}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+        );
       }else{
-        Fluttertoast.showToast(msg: "${finalResult['message']}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+        );
         Navigator.pop(context);
 
       }
@@ -116,10 +122,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   }
 
+  bool _isConnected = true;
+  void _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _isConnected = false;
+      });
+    } else {
+      setState(() {
+        _isConnected = true;
+      });
+    }
 
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isConnected ? Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title:
@@ -163,7 +193,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child: Image.network("${widget.getProfileModel?.data?.profileImage}",
                                 fit: BoxFit.fill,
                                 errorBuilder: (context,_,__){
-                                  return Image.asset('assets/images/mam_images.png');
+                                  return Container(
+                                      height: 120,
+                                      width: 120,
+                                      decoration: BoxDecoration(color: AppColor.grey,borderRadius:  BorderRadius.circular(50)),
+                                      child: Image.asset('assets/images/pak home.png'));
                                 },
                               ),
                             ),
@@ -186,7 +220,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                        Align(
                                         alignment: Alignment.topLeft,
                                         child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
+                                          padding: const EdgeInsets.fromLTRB(
                                               10, 10, 0, 5),
                                           child:
                                           NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Change Profile'),styles: const TextStyle(
@@ -380,6 +414,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       ),
-    );
+    ):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
   }
 }

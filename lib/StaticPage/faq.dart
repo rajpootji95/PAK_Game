@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,11 +25,36 @@ class _FeqScreenState extends State<FeqScreen> {
     // TODO: implement initState
     super.initState();
     getFeqApi();
+    _checkInternetConnection();
   }
+  bool _isConnected = true;
+  void _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _isConnected = false;
+      });
+    } else {
+      setState(() {
+        _isConnected = true;
+      });
+    }
 
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isConnected ? Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: AppColor.white, //change your color here
@@ -67,7 +93,7 @@ class _FeqScreenState extends State<FeqScreen> {
 
 
               })),
-    );
+    ):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
   }
 
   GetFaqModel? getFaq;

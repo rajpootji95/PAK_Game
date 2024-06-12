@@ -1,5 +1,6 @@
 
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,38 @@ class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 2;
   void _incrementCounter() {
 
+  }
+
+  bool _isConnected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkInternetConnection();
+  }
+  void _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _isConnected = false;
+      });
+    } else {
+      setState(() {
+        _isConnected = true;
+      });
+    }
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    });
   }
   List<Widget> widgets =[
     const HomeWidget(),
@@ -82,14 +115,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
        });
      });
-    return SafeArea(
+    return _isConnected ? SafeArea(
       child: Scaffold(
         //sbackgroundColor: Color(0XffD9D9D9),
         extendBodyBehindAppBar: selectedIndex == 2,
         appBar: selectedIndex == 2?  AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: const Text("Agency")
+          //  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Agency"),styles: const TextStyle(
+          //   color: AppColor.red
+          //  )
+          // ),
         ): AppBar(
+          automaticallyImplyLeading: false,
           // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           elevation: 0,
           title: Image.asset('assets/images/pak home.png',scale: 2.5,),
@@ -170,6 +209,6 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
-    );
+    ): Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
   }
 }

@@ -81,7 +81,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
           ),
           height: 50,
-          width: 230,
+          width: 242,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -380,7 +380,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     width: 50,
                                     fit: BoxFit.fill,
                                   ),
-                                  SizedBox(height: 2,),
+                                  SizedBox(height: 0,),
                                   NewText(textFuture: Provider.of<LanguageProvider>(context).translate('${getCategoryModel?.data[index+3].title}'),styles: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -823,21 +823,32 @@ class _HomeWidgetState extends State<HomeWidget> {
                         const SizedBox(
                           width: 6,
                         ),
-                        const Column(
+                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Recieve Rs170.00",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+
+                                NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Receive'),styles: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+
+                                ) ,),
+                                const Text(
+                                  " Rs170.00",
+                                  style: TextStyle(
+                                      fontSize: 13, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Winning Amount",
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
+
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Winning Amount'),styles: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+
+                            ) ,),
+
                           ],
                         )
                       ],
@@ -900,21 +911,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                         const SizedBox(
                           width: 6,
                         ),
-                        const Column(
+                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Recieve Rs30.00",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+
+                                NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Receive'),styles: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+
+                                ) ,),
+                                const Text(
+                                  " Rs30.000",
+                                  style: TextStyle(
+                                      fontSize: 13, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "Winning Amount",
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
+                            NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Winning Amount'),styles: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+
+                            ) ,),
                           ],
                         )
                       ],

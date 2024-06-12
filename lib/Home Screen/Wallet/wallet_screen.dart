@@ -141,7 +141,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Main Wallet Transfer"),styles: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
-                                color: AppColor.grey1
+                                color: AppColor.white
 
                             )
                             ),
@@ -160,7 +160,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(16),
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(
                                                   color: Colors.grey,
                                                   offset: Offset(0, 2),
@@ -171,7 +171,12 @@ class _WalletScreenState extends State<WalletScreen> {
                                         child: Image.asset(imageUrls[index],scale: 1.2,),
                                       ),
                                       const SizedBox(height: 4,),
-                                      Text(textList[index], textAlign:TextAlign.center,style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),)
+                                      NewText(textFuture: Provider.of<LanguageProvider>(context).translate(textList[index]),styles: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+
+                                         )
+                                      ),
                                     ],
                                   ),
                                 )),
@@ -210,8 +215,13 @@ class _WalletScreenState extends State<WalletScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("0.00",style: TextStyle(fontSize: 14),),
-                                      Text(gridTextList[index],style: TextStyle(fontSize: 12),),
+                                       const Text("0.00",style: TextStyle(fontSize: 14),),
+                                      NewText(textFuture: Provider.of<LanguageProvider>(context).translate(gridTextList[index]),styles: const TextStyle(
+                                        fontSize: 12,
+
+                                        )
+                                      ),
+
                                     ],
                                   ),
                                 ),

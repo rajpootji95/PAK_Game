@@ -49,9 +49,8 @@ class _AccountScreenState extends State<AccountScreen> {
   String ? userId;
   Map<String,String> languageList = {
     'English': 'en',
-    "العربية":'ar',
     'اردو': 'ur'};
- GetProfileModel? getProfileModel;
+  GetProfileModel? getProfileModel;
   Future<void> getProfileApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = prefs.getString("userid");
@@ -69,8 +68,8 @@ class _AccountScreenState extends State<AccountScreen> {
     if (response.statusCode == 200) {
      var result  = await response.stream.bytesToString();
      var finalResult  = GetProfileModel.fromJson(json.decode(result));
-     getProfileModel = finalResult;
      setState(() {
+       getProfileModel = finalResult;
 
      });
 
@@ -104,25 +103,28 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
 
                   ),
-                  getProfileModel?.data == null ? const Center(child: CircularProgressIndicator()):  Padding(
+                 /* getProfileModel?.data == null ? const Center(child: CircularProgressIndicator()):*/  Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Row(
                       children: [
                         Stack(
                           children: [
-                            SizedBox(
+                            Container(
                               height: 80,
                               width: 80,
+                              //decoration: BoxDecoration(color: AppColor.white,borderRadius:  BorderRadius.circular(50)),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: getProfileModel?.data?.profileImage == null
-                                    ? Image.asset(
-                                  "assets/images/mam_images.png",
-                                  fit: BoxFit.fill,
-                                )
-                                    : Image.network(
+                                child: Image.network(
                                   "${getProfileModel?.data?.profileImage}",
                                   fit: BoxFit.fill,
+                                   errorBuilder: (_,child,loadingProgress){
+                                   return Container(
+                                       height: 80,
+                                       width: 80,
+                                       decoration: BoxDecoration(color: AppColor.white,borderRadius:  BorderRadius.circular(50)),
+                                       child: Image.asset("assets/images/pak home.png"));
+                                  }
                                 ),
                               ),
                             ),

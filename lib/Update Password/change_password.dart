@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,33 @@ class _ChangePasswordState extends State<ChangePassword> {
   String oldPass = "Enter Old Password";
   String newPass = "Enter New Password";
   String confPass = "Enter Confirm Password";
+
+
+  bool _isConnected = true;
+  void _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _isConnected = false;
+      });
+    } else {
+      setState(() {
+        _isConnected = true;
+      });
+    }
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     Provider.of<LanguageProvider>(context).translate('Enter Old Password').then((value){
@@ -45,7 +73,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       confPass = value;
 
     });
-    return Scaffold(
+    return _isConnected? Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: AppColor.white, //change your color here
@@ -219,13 +247,14 @@ class _ChangePasswordState extends State<ChangePassword> {
           ]),
         ),
       ),
-    );
+    ):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
   }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserId();
+    _checkInternetConnection();
   }
   String? userId;
   getUserId() async {

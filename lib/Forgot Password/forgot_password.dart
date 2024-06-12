@@ -55,8 +55,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 onInputChanged: (PhoneNumber number) {
                     countryCode = number.dialCode;
                    mobileNumber = number.phoneNumber;
-                   print("aqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${mobileController.text}");
-
                 },
                 onInputValidated: (bool value) {
                   if (kDebugMode) {
@@ -167,10 +165,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result);
       if(finalResult['error'] == true){
-        Fluttertoast.showToast(msg: "${finalResult['message']}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+        );
       }else{
         mobileOtp = finalResult['data']['otp'];
-        Fluttertoast.showToast(msg: "${finalResult['message']}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+        );
 
         Navigator.push(context, MaterialPageRoute(builder: (context)=>VerifyScreen(forgotMobile: mobileNumber,otp:mobileOtp,countryCode:countryCode,isForget: true,mobile:mobileController.text ))).then((value){
           mobileController.clear();

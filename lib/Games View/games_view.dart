@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:binance_pay/binance_pay.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
@@ -8,10 +9,13 @@ import 'package:http/http.dart' as http;
 import 'package:pak_games/Model/get_sub_category.dart';
 import 'package:pak_games/Utils/colors.dart';
 import 'package:pak_games/Web%20View%20Screen/web_view_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Api Services/api_end_points.dart';
 import '../Model/get_profile_model.dart';
+import '../Utils/myWidget.dart';
+import '../provider/languageProvider.dart';
 
 class GamesView extends StatefulWidget {
   String? catId;
@@ -29,6 +33,33 @@ class _GamesViewState extends State<GamesView> {
     super.initState();
     getUserId();
     getSubCatApi();
+    _checkInternetConnection();
+  }
+  bool _isConnected = true;
+
+  void _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _isConnected = false;
+      });
+    } else {
+      setState(() {
+        _isConnected = true;
+      });
+    }
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          _isConnected = false;
+        });
+      } else {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    });
   }
 
   final String clientId =
@@ -39,10 +70,14 @@ class _GamesViewState extends State<GamesView> {
       //"EHHtTDjnmTZATYBPiGzZC_AZUfMpMAzj2VZUeqlFUrRJA_C0pQNCxDccB5qoRQSEdcOnnKQhycuOWdP9"; // Replace with your sandbox secret key
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isConnected ? Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("PAK Games"),
+          title: NewText(textFuture: Provider.of<LanguageProvider>(context).translate('PAK Games'),styles: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColor.black
+          ) ,)
         ),
         body: getSubCategoryModel == null
             ? const Center(
@@ -50,22 +85,28 @@ class _GamesViewState extends State<GamesView> {
                 color: AppColor.primary,
               ))
             : getSubCategoryModel!.data.isEmpty
-                ? const Center(child: Text("No Game Found!!"))
+                ?  Center(child:
+        NewText(textFuture: Provider.of<LanguageProvider>(context).translate('No Game Found!!'),styles: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColor.black
+        ) ,)
+
+        )
                 : Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Free Games",
-                            style: TextStyle(
-                              color: AppColor.black,
-                              fontWeight: FontWeight.bold,
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Free Games'),styles: const TextStyle(
                               fontSize: 18,
-                            ),
-                          ),
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.black
+                          ) ,)
+
+
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 3.0,
@@ -119,30 +160,26 @@ class _GamesViewState extends State<GamesView> {
                                             ),
                                           ),
                                         ),
-                                        Text(
-                                          "${freeGames[index].title}",
-                                          style: const TextStyle(
+                                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate("${freeGames[index].title}"),styles: const TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                            color: AppColor.black,overflow: TextOverflow.ellipsis
+                                        ),),
+
                                       ],
                                     )
                                   : const SizedBox.shrink();
                             },
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Premium Games",
-                            style: TextStyle(
-                              color: AppColor.black,
-                              fontWeight: FontWeight.bold,
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Premium Games"),styles: const TextStyle(
                               fontSize: 18,
-                            ),
-                          ),
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.black
+                          ),),
+
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 3.0,
@@ -253,14 +290,12 @@ class _GamesViewState extends State<GamesView> {
                                             ),
                                           ),
                                         ),
-                                        Text(
-                                          "${paidGames[index].title}",
-                                          style: const TextStyle(
+                                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate("${paidGames[index].title}"),styles: const TextStyle(
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                            color: AppColor.black,overflow: TextOverflow.ellipsis
+                                        ),),
+
                                       ],
                                     )
                                   : const SizedBox.shrink();
@@ -269,8 +304,8 @@ class _GamesViewState extends State<GamesView> {
                         ),
                       ],
                     ),
-                  ));
-  }
+                  )):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
+        }
   String ? userId,userName;
   getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

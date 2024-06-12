@@ -25,21 +25,22 @@ class _PromotionScreenState extends State<PromotionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      // appBar: AppBar(),
+      body: ListView(
         children: [
-          Container(
-            height: 50,
-            width: double.infinity,
-            color: AppColor.white,
-            child:  Center(
-              child:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Agency"),styles: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-
-              ) ,),
-             // Text("Agency",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-            ),
-          ),
+          // Container(
+          //   height: 40,
+          //   width: double.infinity,
+          //   color: AppColor.white,
+          //   child:  Center(
+          //     child:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Agency"),styles: const TextStyle(
+          //       fontSize: 14,
+          //       fontWeight: FontWeight.bold,
+          //
+          //     ) ,),
+          //    // Text("Agency",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+          //   ),
+          // ),
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -145,7 +146,9 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                                 children: [
                                                   Text("0",style: TextStyle(fontSize: 16,color: colors[index]),),
                                                   const SizedBox(height: 6,),
-                                                  Text(textList[index],textAlign: TextAlign.center,style: const TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate(textList[index]),styles: const TextStyle(
+                                                     fontSize: 12,color: AppColor.grey1
+                                                  ) ,),
                                                 ],
                                               )),
                                     ),
@@ -156,7 +159,9 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                             children: [
                                               Text("0",style: TextStyle(fontSize: 16,color: colors[index]),),
                                               const SizedBox(height: 6,),
-                                              Text(textList[index],textAlign: TextAlign.center,style: const TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                              NewText(textFuture: Provider.of<LanguageProvider>(context).translate(textList[index]),styles: const TextStyle(
+                                                  fontSize: 12,color: AppColor.grey1
+                                              ) ,),
                                             ],
                                           )),
                                     ),
@@ -374,22 +379,28 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                         IntrinsicHeight(
                                           child: Row(
                                             children: [
-                                            const Expanded(
+                                             Expanded(
                                               child: Column(
                                                 children: [
-                                                  Text("0",style: TextStyle(fontSize: 16,),),
-                                                  SizedBox(height: 6,),
-                                                  Text("This Week",textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                                  const   Text("0",style: TextStyle(fontSize: 16,),),
+                                                  const  SizedBox(height: 6,),
+                                                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("This Week"),styles: const TextStyle(
+                                                      fontSize: 12,color: AppColor.grey1
+                                                    )
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                             VerticalDivider(color: AppColor.grey,thickness: 2,width: 2,),
-                                            const Expanded(
+                                             Expanded(
                                               child: Column(
                                                 children: [
-                                                  Text("0",style: TextStyle(fontSize: 16),),
-                                                  SizedBox(height: 6,),
-                                                  Text("Total Commission",textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                                  const Text("0",style: TextStyle(fontSize: 16),),
+                                                  const  SizedBox(height: 6,),
+                                                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Total Commission"),styles: const TextStyle(
+                                                      fontSize: 12,color: AppColor.grey1
+                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -399,22 +410,28 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                         IntrinsicHeight(
                                           child: Row(
                                             children: [
-                                            const Expanded(
+                                             Expanded(
                                               child: Column(
                                                 children: [
-                                                  Text("0",style: TextStyle(fontSize: 16,),),
-                                                  SizedBox(height: 6,),
-                                                  Text("Direct Subordinate",textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                                  const  Text("0",style: TextStyle(fontSize: 16,),),
+                                                  const SizedBox(height: 6,),
+                                                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Direct Subordinate"),styles: const TextStyle(
+                                                      fontSize: 12,color: AppColor.grey1
+                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                             VerticalDivider(color: AppColor.grey,thickness: 2,width: 2,),
-                                            const Expanded(
+                                             Expanded(
                                               child: Column(
                                                 children: [
-                                                  Text("0",style: TextStyle(fontSize: 16),),
-                                                  SizedBox(height: 6,),
-                                                  Text("Total Number of\nSubordinates\nin the team",textAlign: TextAlign.center,style: TextStyle(fontSize: 12,color: AppColor.grey1),),
+                                                  const Text("0",style: TextStyle(fontSize: 16),),
+                                                  const SizedBox(height: 6,),
+                                                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Total Number of\nSubordinates\nin the team"),styles: const TextStyle(
+                                                      fontSize: 12,color: AppColor.grey1
+                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),

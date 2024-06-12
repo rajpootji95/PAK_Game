@@ -51,6 +51,7 @@ dependencies:
   provider: ^6.1.2
   flutter_screenutil: ^5.9.1
   intl_phone_number_input: ^0.7.0+2
+  connectivity_plus: ^2.3.0
 
 
 

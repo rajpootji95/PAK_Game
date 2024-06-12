@@ -53,7 +53,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'type':"1",
       'country_code':countryCode.toString()
     });
-    print("xxxxxxxxx${request.fields}");
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -62,12 +61,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
      var result = await response.stream.bytesToString();
      var finalResult  = jsonDecode(result);
      if (finalResult['error'] == true) {
-       Fluttertoast.showToast(msg: "${finalResult['message']}");
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+       );
      } else {
        mobile = finalResult['mobile'];
        otp = finalResult['otp'];
 
-       Fluttertoast.showToast(msg: "${finalResult['message']}");
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text("${finalResult['message']}"),backgroundColor: AppColor.primary,duration: Duration(seconds: 1)),
+       );
        Navigator.push(
          context,
          MaterialPageRoute(builder: (context) => VerifyScreen(
