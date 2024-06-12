@@ -1,0 +1,8 @@
+pak_games.com.pak_games.app-pngs-0 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\generated\res\pngs\debug
+pak_games.com.pak_games.app-resValues-1 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\generated\res\resValues\debug
+pak_games.com.pak_games.app-rs-2 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\generated\res\rs\debug
+pak_games.com.pak_games.app-mergeDebugResources-3 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+pak_games.com.pak_games.app-mergeDebugResources-4 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+pak_games.com.pak_games.app-merged_res-5 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\build\intermediates\merged_res\debug
+pak_games.com.pak_games.app-debug-6 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\src\debug\res
+pak_games.com.pak_games.app-main-7 C:\Rajpoot\Delris\Pak Games\pak_games_latest\android\app\src\main\res
