@@ -4,7 +4,6 @@ import 'package:binance_pay/binance_pay.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:http/http.dart' as http;
 import 'package:pak_games/Model/get_sub_category.dart';
 import 'package:pak_games/Utils/colors.dart';
@@ -35,6 +34,7 @@ class _GamesViewState extends State<GamesView> {
     getSubCatApi();
     _checkInternetConnection();
   }
+
   bool _isConnected = true;
 
   void _checkInternetConnection() async {
@@ -64,149 +64,174 @@ class _GamesViewState extends State<GamesView> {
 
   final String clientId =
       "AdylaisGlHD-DdyY3mzuJPxoTpYGXpdwijwTR8tTBjSIPYsOCMW1F3ZzsGZe21sXA6-Bk6xUjWd9iGaK"; // Replace with your sandbox client ID
-      //"AW1TdvpSGbIM5iP4HJNI5TyTmwpY9Gv9dYw8_8yW5lYIbCqf326vrkrp0ce9TAqjEGMHiV3OqJM_aRT0"; // Replace with your sandbox client ID
+  //"AW1TdvpSGbIM5iP4HJNI5TyTmwpY9Gv9dYw8_8yW5lYIbCqf326vrkrp0ce9TAqjEGMHiV3OqJM_aRT0"; // Replace with your sandbox client ID
   final String secretKey =
       "EI925OdIc6a-sJI_wB_uik251pyZxDj1ijtacwDU9TZHd5JLqTZ6Ybt452vKG9RoheaanGHWiqMCPPdi"; // Replace with your sandbox secret key
-      //"EHHtTDjnmTZATYBPiGzZC_AZUfMpMAzj2VZUeqlFUrRJA_C0pQNCxDccB5qoRQSEdcOnnKQhycuOWdP9"; // Replace with your sandbox secret key
+  //"EHHtTDjnmTZATYBPiGzZC_AZUfMpMAzj2VZUeqlFUrRJA_C0pQNCxDccB5qoRQSEdcOnnKQhycuOWdP9"; // Replace with your sandbox secret key
   @override
   Widget build(BuildContext context) {
-    return _isConnected ? Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: NewText(textFuture: Provider.of<LanguageProvider>(context).translate('PAK Games'),styles: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColor.black
-          ) ,)
-        ),
-        body: getSubCategoryModel == null
-            ? const Center(
-                child: CupertinoActivityIndicator(
-                color: AppColor.primary,
-              ))
-            : getSubCategoryModel!.data.isEmpty
-                ?  Center(child:
-        NewText(textFuture: Provider.of<LanguageProvider>(context).translate('No Game Found!!'),styles: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: AppColor.black
-        ) ,)
-
-        )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Free Games'),styles: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.black
-                          ) ,)
-
-
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 3.0,
-                          width: 500,
-                          child: GridView.builder(
-                            itemCount: getSubCategoryModel?.data
-                                .where((item) => item.type == "0")
-                                .length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 5.0,
-                              mainAxisSpacing: 5.0,
-                              childAspectRatio: 1.0,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              var freeGames = getSubCategoryModel?.data
-                                  .where((item) => item.type == "0")
-                                  .toList();
-                              return freeGames != null
-                                  ? Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    WebViewScreen(
-                                                  gameUrl:
-                                                      freeGames[index].url!,
+    return _isConnected
+        ? Scaffold(
+            appBar: AppBar(
+                centerTitle: true,
+                title: NewText(
+                  textFuture: Provider.of<LanguageProvider>(context)
+                      .translate('PAK Games'),
+                  styles: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.black),
+                )),
+            body: getSubCategoryModel == null
+                ? const Center(
+                    child: CupertinoActivityIndicator(
+                    color: AppColor.primary,
+                  ))
+                : getSubCategoryModel!.data.isEmpty
+                    ? Center(
+                        child: NewText(
+                        textFuture: Provider.of<LanguageProvider>(context)
+                            .translate('No Game Found!!'),
+                        styles: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.black),
+                      ))
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: NewText(
+                                  textFuture:
+                                      Provider.of<LanguageProvider>(context)
+                                          .translate('Free Games'),
+                                  styles: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.black),
+                                )),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 3.0,
+                              width: 500,
+                              child: GridView.builder(
+                                itemCount: getSubCategoryModel?.data
+                                    .where((item) => item.type == "0")
+                                    .length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 5.0,
+                                  mainAxisSpacing: 5.0,
+                                  childAspectRatio: 1.0,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  var freeGames = getSubCategoryModel?.data
+                                      .where((item) => item.type == "0")
+                                      .toList();
+                                  return freeGames != null
+                                      ? Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WebViewScreen(
+                                                      gameUrl:
+                                                          freeGames[index].url!,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: SizedBox(
+                                                  height: 80,
+                                                  width: 80,
+                                                  child: Image.network(
+                                                    "${freeGames[index].image}",
+                                                    fit: BoxFit.fill,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return const Icon(Icons
+                                                          .error); // Placeholder for error
+                                                    },
+                                                  ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: SizedBox(
-                                              height: 80,
-                                              width: 80,
-                                              child: Image.network(
-                                                "${freeGames[index].image}",
-                                                fit: BoxFit.fill,
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return const Icon(Icons
-                                                      .error); // Placeholder for error
-                                                },
-                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate("${freeGames[index].title}"),styles: const TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.black,overflow: TextOverflow.ellipsis
-                                        ),),
-
-                                      ],
-                                    )
-                                  : const SizedBox.shrink();
-                            },
-                          ),
-                        ),
-                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child:  NewText(textFuture: Provider.of<LanguageProvider>(context).translate("Premium Games"),styles: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.black
-                          ),),
-
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 3.0,
-                          width: 500,
-                          child: GridView.builder(
-                            itemCount: getSubCategoryModel?.data
-                                .where((item) => item.type == "1")
-                                .length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 5.0,
-                              mainAxisSpacing: 5.0,
-                              childAspectRatio: 1.0,
+                                            NewText(
+                                              textFuture: Provider.of<
+                                                      LanguageProvider>(context)
+                                                  .translate(
+                                                      "${freeGames[index].title}"),
+                                              styles: const TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColor.black,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                          ],
+                                        )
+                                      : const SizedBox.shrink();
+                                },
+                              ),
                             ),
-                            itemBuilder: (BuildContext context, int index) {
-                              var paidGames = getSubCategoryModel?.data
-                                  .where((item) => item.type == "1")
-                                  .toList();
-                              return paidGames != null
-                                  ? Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            makePayment();
-                                            // Logging to check the credentials
-                                          /*  print("Client ID: $clientId");
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: NewText(
+                                textFuture:
+                                    Provider.of<LanguageProvider>(context)
+                                        .translate("Premium Games"),
+                                styles: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.black),
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 3.0,
+                              width: 500,
+                              child: GridView.builder(
+                                itemCount: getSubCategoryModel?.data
+                                    .where((item) => item.type == "1")
+                                    .length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 5.0,
+                                  mainAxisSpacing: 5.0,
+                                  childAspectRatio: 1.0,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  var paidGames = getSubCategoryModel?.data
+                                      .where((item) => item.type == "1")
+                                      .toList();
+                                  return paidGames != null
+                                      ? Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Take  subscription plan'),
+                                                    backgroundColor:
+                                                        AppColor.primary,
+                                                    duration:
+                                                        Duration(seconds: 1),
+                                                  ),
+                                                );
+                                                //makePayment();
+                                                // Logging to check the credentials
+                                                /*  print("Client ID: $clientId");
                                             print("Secret Key: $secretKey");
 
                                             Navigator.of(context).push(
@@ -274,81 +299,87 @@ class _GamesViewState extends State<GamesView> {
                                                     }),
                                               ),
                                             );*/
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: SizedBox(
-                                              height: 80,
-                                              width: 80,
-                                              child: Image.network(
-                                                "${paidGames[index].image}",
-                                                fit: BoxFit.fill,
-                                                errorBuilder: (context, error, stackTrace) {
-                                                  return const Icon(Icons.error); // Placeholder for error
-                                                },
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: SizedBox(
+                                                  height: 80,
+                                                  width: 80,
+                                                  child: Image.network(
+                                                    "${paidGames[index].image}",
+                                                    fit: BoxFit.fill,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return const Icon(Icons
+                                                          .error); // Placeholder for error
+                                                    },
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                        NewText(textFuture: Provider.of<LanguageProvider>(context).translate("${paidGames[index].title}"),styles: const TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.black,overflow: TextOverflow.ellipsis
-                                        ),),
-
-                                      ],
-                                    )
-                                  : const SizedBox.shrink();
-                            },
-                          ),
+                                            NewText(
+                                              textFuture: Provider.of<
+                                                      LanguageProvider>(context)
+                                                  .translate(
+                                                      "${paidGames[index].title}"),
+                                              styles: const TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColor.black,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                          ],
+                                        )
+                                      : const SizedBox.shrink();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )):Scaffold(body: Center(child: Image.asset('assets/images/internet.png',)));
-        }
-  String ? userId,userName;
+                      ))
+        : Scaffold(
+            body: Center(
+                child: Image.asset(
+            'assets/images/internet.png',
+          )));
+  }
+
+  String? userId, userName;
+
   getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = prefs.getString("userid");
     getProfileApi();
   }
+
   GetProfileModel? getProfileModel;
+
   Future<void> getProfileApi() async {
-    var headers = {
-      'Cookie': 'ci_session=jabmg512o22abd8r3bvi86kbgq13ieo5'
-    };
-    var request = http.MultipartRequest('POST', Uri.parse('${Endpoints.baseUrl}get_profile'));
-    request.fields.addAll({
-      'user_id':userId.toString()
-    });
+    var headers = {'Cookie': 'ci_session=jabmg512o22abd8r3bvi86kbgq13ieo5'};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${Endpoints.baseUrl}get_profile'));
+    request.fields.addAll({'user_id': userId.toString()});
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      var result  = await response.stream.bytesToString();
-      var finalResult  = GetProfileModel.fromJson(json.decode(result));
+      var result = await response.stream.bytesToString();
+      var finalResult = GetProfileModel.fromJson(json.decode(result));
       getProfileModel = finalResult;
       userName = getProfileModel?.data?.username;
-      setState(() {
-
-      });
-
-    }
-    else {
+      setState(() {});
+    } else {
       print(response.reasonPhrase);
     }
-
   }
-  
-  
+
   getPlanSubscribe() async {
-    var headers = {
-      'Cookie': 'ci_session=jdpbq7fm3deavq5q25t24cb20c3rfc6f'
-    };
-    var request = http.MultipartRequest('POST', Uri.parse('${Endpoints.baseUrl}subscribe'));
-    request.fields.addAll({
-      'user_id': userId.toString()
-    });
+    var headers = {'Cookie': 'ci_session=jdpbq7fm3deavq5q25t24cb20c3rfc6f'};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${Endpoints.baseUrl}subscribe'));
+    request.fields.addAll({'user_id': userId.toString()});
 
     request.headers.addAll(headers);
 
@@ -357,21 +388,15 @@ class _GamesViewState extends State<GamesView> {
     if (response.statusCode == 200) {
       var result = await response.stream.bytesToString();
       var finalResult = jsonDecode(result);
-      if(finalResult['error']== false){
-
-      }
-      setState(() {
-
-      });
+      if (finalResult['error'] == false) {}
+      setState(() {});
+    } else {
+      print(response.reasonPhrase);
     }
-    else {
-    print(response.reasonPhrase);
-    }
-
   }
 
-
   GetSubCategoryModel? getSubCategoryModel;
+
   getSubCatApi() async {
     var headers = {'Cookie': 'ci_session=rliu6p075fqkj6ogvcrtorav75j548s2'};
     var request = http.MultipartRequest(
@@ -392,11 +417,12 @@ class _GamesViewState extends State<GamesView> {
     }
   }
 
-
   makePayment() async {
     BinancePay pay = BinancePay(
-      apiKey:"oueD0sEAMMNCDfRcjwO0UI30OuRAhw6MBy3dLCTe2Il2dnJyQuNdmnZGaAF9vKA0",
-      apiSecretKey:"W5ORTL4UyXCjYvqTzYw1Ga95bRu4XR6NOWhZf9bI7aLBX9De4HqPQxJlt6q7d9nJ",
+      apiKey:
+          "oueD0sEAMMNCDfRcjwO0UI30OuRAhw6MBy3dLCTe2Il2dnJyQuNdmnZGaAF9vKA0",
+      apiSecretKey:
+          "W5ORTL4UyXCjYvqTzYw1Ga95bRu4XR6NOWhZf9bI7aLBX9De4HqPQxJlt6q7d9nJ",
     );
 
     String tradeNo = generateMerchantTradeNo();
@@ -427,6 +453,7 @@ class _GamesViewState extends State<GamesView> {
       debugPrint("Failed to create order. No data returned.");
       return;
     }
+
     /// Query the order
     QueryResponse queryResponse;
     try {
@@ -436,7 +463,6 @@ class _GamesViewState extends State<GamesView> {
       );
       // Log the entire response for debugging
       //debugPrint("QueryOrder response: ${queryResponse.toJson()}");
-
     } catch (e) {
       debugPrint("Order query failed: $e");
       return;
@@ -449,7 +475,6 @@ class _GamesViewState extends State<GamesView> {
 
       // Log the entire response for debugging
       //debugPrint("CloseOrder response: ${closeResponse.toJson()}");
-
     } catch (e) {
       debugPrint("Order closing failed: $e");
       return;
@@ -458,8 +483,7 @@ class _GamesViewState extends State<GamesView> {
   }
 
 // String generateMerchantTradeNo() {
-  //   // Generate a unique trade number (implement as per your requirement)
-  //   return DateTime.now().millisecondsSinceEpoch.toString();
-  // }
-
+//   // Generate a unique trade number (implement as per your requirement)
+//   return DateTime.now().millisecondsSinceEpoch.toString();
+// }
 }

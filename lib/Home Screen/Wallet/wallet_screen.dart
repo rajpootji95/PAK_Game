@@ -38,7 +38,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   color: AppColor.redLight,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
 
               ),
             ],
@@ -115,7 +115,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                       child: Text("0 %"),
                                     ),
                                   ),
-                                  Text("Rs. 0.00",style: TextStyle(color: Colors.grey,fontSize: 16),),
+                                  const Text("Rs. 0.00",style: TextStyle(color: Colors.grey,fontSize: 16),),
                                   NewText(textFuture: Provider.of<LanguageProvider>(context).translate("3rd Party Wallet"),styles: const TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -171,11 +171,13 @@ class _WalletScreenState extends State<WalletScreen> {
                                         child: Image.asset(imageUrls[index],scale: 1.2,),
                                       ),
                                       const SizedBox(height: 4,),
-                                      NewText(textFuture: Provider.of<LanguageProvider>(context).translate(textList[index]),styles: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-
-                                         )
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        child: NewText(textFuture: Provider.of<LanguageProvider>(context).translate(textList[index]),styles: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                           )
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -234,6 +236,6 @@ class _WalletScreenState extends State<WalletScreen> {
               ) )
         ],
       ),
-    );;
+    );
   }
 }

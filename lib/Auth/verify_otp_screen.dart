@@ -51,6 +51,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
         .translate('Enter Password')
         .then((value) {
       newPass = value;
+
     });
     return Scaffold(
       body: Column(

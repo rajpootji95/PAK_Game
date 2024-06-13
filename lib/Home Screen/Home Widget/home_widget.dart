@@ -136,7 +136,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               //
               //   ),
               // ),
-              CarouselSlider.builder(
+              getBannerModel?.data == null ? const CupertinoActivityIndicator(color: AppColor.primary,): CarouselSlider.builder(
                 itemCount: getBannerModel?.data.length ?? 0,
                 options: CarouselOptions(
                   autoPlay: true,

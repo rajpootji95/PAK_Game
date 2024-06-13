@@ -150,64 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = "Enter Email";
   String password = "Enter Password";
   String mobileNo = "Enter Mobile Number";
-  openLogoutDialog(){
-    return showDialog(context: context, builder: (context){
-      return StatefulBuilder(builder: (context,setState){
-        return AlertDialog(
-          title:   NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Are you sure, You want to logout ?'),styles: const TextStyle(
-              color: AppColor.black,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Lora'
-          ) ,),
 
-          content: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: ()async{
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
-                  setState((){
-                  });
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.center,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.green,
-                  ),
-                  child:
-                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Confirm'),styles: const TextStyle(
-                      color: AppColor.white,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Lora'
-                  ) ,),
-                ),
-              ),
-              const SizedBox(width: 10,),
-              InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.center,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.red,
-                  ),
-                  child:
-                  NewText(textFuture: Provider.of<LanguageProvider>(context).translate('Cancel'),styles: const TextStyle(
-                      color: AppColor.white,fontSize: 15,fontWeight: FontWeight.w500,fontFamily: 'Lora'
-                  ) ,),
-
-                ),
-              ),
-            ],
-          ),
-        );
-      });
-    });
-  }
   Future<bool> showExitConfirmationDialog(BuildContext context) async {
     return await showDialog(
       context: context,
@@ -274,7 +217,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Provider.of<LanguageProvider>(context).translate('Enter Email').then((value){
       email = value;
-
+   // setState(() {
+   //
+   //  });
     });
     Provider.of<LanguageProvider>(context).translate('Enter Password').then((value){
       password = value;
